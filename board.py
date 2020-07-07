@@ -1,16 +1,48 @@
-import numpy as np
-
 def board_gen():
     flag = True
-    board = np.zeros((8, 8))
-    for i in range(board.shape[0]):
-        for j in range(board.shape[1]):
+    board = [[0 for j in range(8)] for i in range(8)]
+    for i in range(len(board)):
+        for j in range(len(board[i])):
             offset = j
             if flag:
                 offset += 1
             
             if offset % 2 == 0 and i < 3:
-                board[i, j] = 1
+                board[i][j] = 1
             elif offset % 2 == 0 and i >= 5:
-                board[i, j] = 2
+                board[i][j] = 2
+        flag = not flag
     return board
+
+
+def test_board(flag):
+    if flag == 1:
+        return [
+    [0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 2, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 2, 0, 2, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 0, 2, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 2, 0, 1, 0, 0, 0]]
+    elif flag == 2:
+        return [
+    [0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 2, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0]]
+    elif flag == 3:
+        return [
+    [0, 10, 0, 0, 0, 0, 0, 0],
+    [0, 0, 20, 0, 20, 0, 20, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0]]
