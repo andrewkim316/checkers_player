@@ -1,21 +1,19 @@
 from board import board_gen, test_board
-from utils import get_next_board_states, print_board, next_turn
+from montecarlo import montecarlo
+import utils
 import random
 
 def main():
-    curr_board = board_gen()
-
-    iters = 0
-    turn = 1
-    while True:
-        next_states = get_next_board_states(turn, curr_board)
-        if len(next_states) == 0:
-            break
-        curr_board = random.choice(next_states)
-        turn = next_turn(turn)
-        iters += 1
-    print_board(curr_board)
-    print(iters / 2)
+    board = board_gen()
+    tree = montecarlo(board)
+    head = tree
+    while len(head.children) > 0:
+        # for i in range(len(head.children)):
+        #     utils.print_board(head.children[i].state)
+        print(list(map(lambda x: x.visits, head.children)))
+        max_arg = utils.get_max_ucb(head)
+        head = head.children[max_arg]
+        utils.print_board(head.state)
 
         
 
