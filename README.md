@@ -6,6 +6,8 @@ Watch a computer play checkers against itself, employing Monte Carlo Tree Search
 
 - numpy
 
+## Run Script
+
 Run with:
 
 ```
