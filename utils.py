@@ -131,7 +131,7 @@ def is_on_board(coords):
 def print_board(board):
     out_str = ""
     for i in range(len(board)):
-        out_str += f"{' '.join(map(str, board[i]))}\n"
+        out_str += f"{' '.join(map(lambda x: f'{x} ' if x < 10 else str(x), board[i]))}\n"
     
     print(out_str)
 

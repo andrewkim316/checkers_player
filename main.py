@@ -2,18 +2,38 @@ from board import board_gen, test_board
 from montecarlo import montecarlo
 import utils
 import random
+import sys
 
 def main():
+    if len(sys.argv) != 3:
+        print("Incorrect amount of args")
+        return
+    
+    args = sys.argv[1:]
+    try:
+        int(args[0])
+        float(args[1])
+    except ValueError:
+        print("Incorrect arg types")
+        return
+    
+
+    if(int(args[0]) != 1 and float(args[1]) != 2):
+        print("Turn arg must be 1 or 2")
+        return
+
     board = board_gen()
-    tree = montecarlo(board)
-    head = tree
-    while len(head.children) > 0:
-        # for i in range(len(head.children)):
-        #     utils.print_board(head.children[i].state)
-        print(list(map(lambda x: x.visits, head.children)))
-        max_arg = utils.get_max_ucb(head)
-        head = head.children[max_arg]
-        utils.print_board(head.state)
+    turn = int(args[0])
+    print("Initial board:")
+    utils.print_board(board)
+
+    while len(utils.get_next_board_states(turn, board)) > 0:
+        board = montecarlo(board, turn, float(args[1]))
+        print(f"{turn} goes")
+        utils.print_board(board)
+        turn = utils.next_turn(turn)
+    
+    print(f"{utils.next_turn(turn)} wins!")
 
         
 

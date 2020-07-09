@@ -2,13 +2,13 @@ from node import Node
 import numpy as np
 import random
 import utils
+import time
 
-def montecarlo(board):
-    turn = 1
+def montecarlo(board, turn, max_time):
     tree = Node(board, turn)
 
-    iters = 0
-    while iters < 10000:
+    timeout = time.time() + max_time
+    while time.time() < timeout:
         next_node, path = select(tree)
         if next_node != None and path != None:
             winner = rollout(next_node.state, next_node.turn)
@@ -18,9 +18,9 @@ def montecarlo(board):
                 curr.visits += 1
                 if winner == curr.turn:
                     curr.tot_val += 1
-        
-        iters += 1
-    return tree
+    
+    next_move = np.argmax(np.array(list(map(lambda x: x.visits, tree.children))))
+    return tree.children[next_move].state
 
 def select(tree):
     head = tree
