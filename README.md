@@ -4,7 +4,7 @@ Watch a computer play checkers against itself, employing Monte Carlo Tree Search
 
 ## Dependencies
 
-..\* numpy
+- numpy
 
 Run with:
 
