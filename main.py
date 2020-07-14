@@ -1,10 +1,11 @@
-from board import board_gen, test_board
+from board import init_board
 from montecarlo import montecarlo
 import utils
 import random
 import sys
 
 def main():
+    # Handles command line args
     if len(sys.argv) != 3:
         print("Incorrect amount of args")
         return
@@ -22,12 +23,14 @@ def main():
         print("Turn arg must be 1 or 2")
         return
 
-    board = board_gen()
+    # Initializes board
+    board = init_board()
     turn = int(args[0])
     print("Initial board:")
     utils.print_board(board)
 
-    while len(utils.get_next_board_states(turn, board)) > 0:
+    # Loops until someone wins
+    while len(utils.get_next_board_states(board, turn)) > 0:
         board = montecarlo(board, turn, float(args[1]))
         print(f"{turn} goes")
         utils.print_board(board)

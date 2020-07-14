@@ -4,6 +4,7 @@ import random
 import utils
 import time
 
+# Implements MCTS
 def montecarlo(board, turn, max_time):
     tree = Node(board, turn)
 
@@ -22,12 +23,13 @@ def montecarlo(board, turn, max_time):
     next_move = np.argmax(np.array(list(map(lambda x: x.visits, tree.children))))
     return tree.children[next_move].state
 
+# Selection and Expansion step of MCTS
 def select(tree):
     head = tree
     path = []
     while True:
         if len(head.children) == 0:
-            next_states = utils.get_next_board_states(head.turn, head.state)
+            next_states = utils.get_next_board_states(head.state, head.turn)
             if len(next_states) == 0:
                 return None, None
             for i in range(len(next_states)):
@@ -47,11 +49,11 @@ def select(tree):
             path.append(next_ind)
             return head.children[next_ind], path
 
-
+# Rollout step of MCTS
 def rollout(board, turn):
     curr_board = utils.copy_board(board)
     while True:
-        next_states = utils.get_next_board_states(turn, curr_board)
+        next_states = utils.get_next_board_states(curr_board, turn)
         if len(next_states) == 0:
             break
         curr_board = random.choice(next_states)
